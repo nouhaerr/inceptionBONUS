@@ -1,0 +1,88 @@
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+volumes:
+  mariadb_vol:
+    driver: local
+    name : mariadb_vol
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/nerrakeb/data/mariadb
+  wordpress_vol:
+    driver: local
+    name: wordpress_vol
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/nerrakeb/data/wordpress
+
+services:
+  nginx:
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    volumes:
+      - wordpress_vol:/var/www/html
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+    restart: always
+
+  wordpress:
+    build: requirements/wordpress
+    container_name: wordpress
+    networks:
+      - inception
+    volumes:
+      - wordpress_vol:/var/www/html
+    env_file:
+      - ./.env
+    depends_on:
+      - mariadb
+    restart: always
+
+  mariadb:
+    build: requirements/mariadb
+    container_name: mariadb
+    networks:
+      - inception
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    env_file:
+      - ./.env
+    restart: always
+
+  redis:
+    build: requirements/bonus/redis
+    container_name: redis
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    ports:
+      - '6379:6379'
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress_vol:/var/www/html
+    restart: always
+  
+  static_page:
+    build: requirements/bonus/static_page
+    container_name: static_page
+    ports:
+      - '4004:4004'
+    networks:
+      - inception
+    volumes:
+      - ./requirements/bonus/static_page/conf/:/etc/nginx/conf.d/:ro
+      - ./requirements/bonus/static_page/tools/:/var/www/html/
+    restart: always
+    

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        header {
+            background: #0078D7;
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+        nav {
+            background: #f4f4f4;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav a {
+            color: #333;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ERRAKEB Nouhaila</h1>
+    <p>Web Developer | Designer | Creator</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<div class="container">
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <p>Hello! I'm Nouhaila, a passionate web developer with a knack for creating elegant and functional websites. I love coding and learning new technologies to enhance my skills.</p>
+    </section>
+
+    <section id="skills" class="section">
+        <h2>Skills</h2>
+        <ul>
+            <li>HTML, CSS, JavaScript</li>
+            <li>JAVA, C++</li>
+            <li>PHP, MYSQL</li>
+            <li>Git and Version Control</li>
+        </ul>
+    </section>
+
+    <section id="experience" class="section">
+        <h2>Experience</h2>
+        <p><strong>Data Collector</strong> at RGPH (September 2024 - October 2024)</p>
+        <p>Developed user-friendly web interfaces and improved website performance by 30%.</p>
+        <p><strong>FullStack Developer</strong> at BC Skills Group (April 2022 - June 2022)</p>
+        <p>Designed responsive websites and collaborated with teams to deliver projects on time.</p>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>Email: nerrakeb@gmail.com</p>
+        <p>Phone: +212660770921</p>
+        <p>Phone: +212660770921</p>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2024 Nouhaila ERRAKEB. All rights reserved.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
