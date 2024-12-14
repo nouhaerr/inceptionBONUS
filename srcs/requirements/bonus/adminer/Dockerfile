@@ -18,7 +18,7 @@ RUN mkdir -p /var/www/html && \
 
 COPY /conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-# Expose port 9000
+# Expose port 9001
 EXPOSE 9001
 
 # Command to start PHP-FPM

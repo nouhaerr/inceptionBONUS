@@ -71,19 +71,23 @@ services:
       - wordpress
     networks:
         - inception
+    volumes:
+      - "wordpress_vol:/var/www/html"
     restart: always
 
-  # ftp_server:
-  #   container_name: ftp_server
-  #   build: requirements/bonus/ftp_server
-  #   ports:
-  #     - "21:21"
-  #     - "21100-21110:21100-21110"
-  #   volumes:
-  #     - "wordpress_data:/var/www/html"
-  #   networks:
-  #     - inception
-  #   restart: always
+  ftp_server:
+    container_name: ftp_server
+    build: requirements/bonus/ftp_server
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    volumes:
+      - "wordpress_vol:/var/www/html"
+    networks:
+      - inception
+    env_file:
+      - ./.env
+    restart: always
 
   adminer:
     build: requirements/bonus/adminer
