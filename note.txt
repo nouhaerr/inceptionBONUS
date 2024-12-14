@@ -1,0 +1,15 @@
+dockerd
+namespace
+cgroup
+tls/ssl
+docker compose
+php-fpm
+3lash wordpress kihtaj php-fpm
+how nginx works with php-fpm and wordpress
+rest api
+docker0 network
+
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+    ach hadchi

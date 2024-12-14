@@ -1,0 +1,104 @@
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+volumes:
+  mariadb_vol:
+    driver: local
+    name : mariadb_vol
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/nerrakeb/data/mariadb
+  wordpress_vol:
+    driver: local
+    name: wordpress_vol
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/nerrakeb/data/wordpress
+
+services:
+  nginx:
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    volumes:
+      - wordpress_vol:/var/www/html
+    env_file:
+      - ./.env
+    depends_on:
+      - wordpress
+    restart: always
+
+  wordpress:
+    build: requirements/wordpress
+    container_name: wordpress
+    networks:
+      - inception
+    volumes:
+      - wordpress_vol:/var/www/html
+    env_file:
+      - ./.env
+    depends_on:
+      - mariadb
+    restart: always
+
+  mariadb:
+    build: requirements/mariadb
+    container_name: mariadb
+    networks:
+      - inception
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    env_file:
+      - ./.env
+    restart: always
+
+  redis:
+    container_name: redis
+    build: requirements/bonus/redis
+    ports:
+        - "6379:6379"
+    depends_on:
+      - wordpress
+    networks:
+        - inception
+    restart: always
+
+  # ftp_server:
+  #   container_name: ftp_server
+  #   build: requirements/bonus/ftp_server
+  #   ports:
+  #     - "21:21"
+  #     - "21100-21110:21100-21110"
+  #   volumes:
+  #     - "wordpress_data:/var/www/html"
+  #   networks:
+  #     - inception
+  #   restart: always
+
+  adminer:
+    build: requirements/bonus/adminer
+    container_name: adminer
+    depends_on:
+      - mariadb
+    expose:
+      - 9000
+    networks:
+      - inception
+    restart: always
+
+  static_page:
+    build: requirements/bonus/static_page
+    container_name: static_page
+    ports:
+      - '4004:4004'
+    networks:
+      - inception
+    restart: always
+    
