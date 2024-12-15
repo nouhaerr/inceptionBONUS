@@ -11,6 +11,17 @@ wp core install --url=$URL --title=$TITLE --admin_user=$WP_ADMIN --admin_passwor
 wp user create $WP_USER $WP_USER_EMAIL --role=subscriber --user_pass=$WP_USER_PASS --allow-root
 wp theme activate twentytwentyfour --allow-root
 
+wp --allow-root config set FS_METHOD "'direct'" --raw
+wp --allow-root config set FTP_HOST "'ftp-server'" --raw
+wp --allow-root config set FTP_USER "'$FTP_USR'" --raw
+wp --allow-root config set FTP_PASS "'$FTP_PWD'" --raw
+wp --allow-root config set FTP_SSL "false" --raw
+wp --allow-root config set FTP_PUBKEY "''" --raw
+wp --allow-root config set FTP_PRIKEY "''" --raw
+wp --allow-root config set FTP_PASSIVE_MODE "true" --raw
+
+chown -R www-data:www-data /var/www/html/wp-content
+chmod -R 755 /var/www/html/wp-content
 
 #Redis
 wp config set WP_REDIS_HOST redis --allow-root
@@ -21,5 +32,6 @@ wp plugin install redis-cache --activate --allow-root
 wp plugin update --all --allow-root
 
 wp redis enable --allow-root
+# redis-cli KEYS *
 
 exec php-fpm7.4 -F
