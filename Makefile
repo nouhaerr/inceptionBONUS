@@ -1,6 +1,6 @@
 COMPOSE_FILE=./srcs/docker-compose.yml
 
-all: up
+all: build up
 
 up:
 	@docker compose -f $(COMPOSE_FILE) up -d
