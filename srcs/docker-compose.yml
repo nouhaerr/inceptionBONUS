@@ -22,6 +22,7 @@ volumes:
 services:
   nginx:
     build: requirements/nginx
+    image: nginx
     container_name: nginx
     ports:
       - "443:443"
@@ -38,6 +39,7 @@ services:
 
   wordpress:
     build: requirements/wordpress
+    image: wordpress
     container_name: wordpress
     networks:
       - inception
@@ -53,6 +55,7 @@ services:
 
   mariadb:
     build: requirements/mariadb
+    image: mariadb
     container_name: mariadb
     networks:
       - inception
@@ -63,8 +66,9 @@ services:
     restart: always
 
   redis:
-    container_name: redis
     build: requirements/bonus/redis
+    image: redis
+    container_name: redis
     ports:
         - "6379:6379"
     depends_on:
@@ -76,8 +80,9 @@ services:
     restart: always
 
   ftp_server:
-    container_name: ftp_server
     build: requirements/bonus/ftp_server
+    image: ftp_server
+    container_name: ftp_server
     ports:
       - "21:21"
       - "21100-21110:21100-21110"
@@ -91,6 +96,7 @@ services:
 
   adminer:
     build: requirements/bonus/adminer
+    image: adminer
     container_name: adminer
     depends_on:
       - mariadb
@@ -102,6 +108,7 @@ services:
 
   static_page:
     build: requirements/bonus/static_page
+    image: static_page
     container_name: static_page
     ports:
       - '4004:4004'

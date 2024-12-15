@@ -12,8 +12,6 @@ mariadb -e "FLUSH PRIVILEGES;"
 
 service mariadb stop
 
-# sleep 5
-
 # Using mysqld_safe is a common practice in Docker containers 
 # to ensure that the MariaDB server starts reliably and remains running within the container environment,
 # providing a stable database service for applications running inside the container.
